@@ -9,57 +9,31 @@ class AddMovie extends Component {
 
     this.state = {
       added: false,
-      title: "Yaro's test",
-      director: "Yaro",
-      description: "This is test made by Yaro!",
-      rating: 5
+      movie: {
+        title: "Yaro's test",
+        director: "Yaro",
+        description: "This is test made by Yaro!",
+        rating: 5
+      }
     };
 
-    this.addTitle = this.addTitle.bind(this);
-    this.addDirector = this.addDirector.bind(this);
-    this.addDescription = this.addDescription.bind(this);
-    this.addRating = this.addRating.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  addTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-
-  addDirector(e) {
-    this.setState({
-      director: e.target.value
-    });
-  }
-
-  addDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-
-  addRating(e) {
-    this.setState({
-      rating: e.target.value
-    });
+  onChange(e) {
+    const info = { ...this.state.movie };
+    info[e.target.id] = e.target.value;
+    this.setState({ info });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const movie = {
-      title: this.state.title,
-      director: this.state.director,
-      description: this.state.description,
-      rating: this.state.rating
-    };
-
     axios
       .post(
         "http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies",
-        movie
+        this.state.movie
       )
       .then(() => {
         this.setState({
@@ -73,6 +47,8 @@ class AddMovie extends Component {
       return <Redirect to="/" />;
     }
 
+    const { title, director, description, rating } = this.state.movie;
+
     return (
       <>
         <Helmet>
@@ -82,41 +58,45 @@ class AddMovie extends Component {
         <form onSubmit={this.onSubmit}>
           <h3>Title:</h3>
           <input
+            id="title"
             type="text"
             minLength="1"
             maxLength="40"
-            onChange={this.addTitle}
-            value={this.state.title}
+            onChange={this.onChange}
+            value={title}
             required="required"
           />
           <h3>Director:</h3>
           <input
+            id="director"
             type="text"
             minLength="1"
             maxLength="40"
-            onChange={this.addDirector}
-            value={this.state.director}
+            onChange={this.onChange}
+            value={director}
             required="required"
           />
           <h3>Description:</h3>
           <textarea
+            id="description"
             minLength="1"
             maxLength="300"
-            onChange={this.addDescription}
-            value={this.state.description}
+            onChange={this.onChange}
+            value={description}
             required="required"
           />
           <h3>Rating:</h3>
           <input
+            id="rating"
             type="range"
             min="0"
             max="5"
             step="0.1"
-            onChange={this.addRating}
-            value={this.state.rating}
+            onChange={this.onChange}
+            value={rating}
             required="required"
           />
-          <label>{this.state.rating}/5</label>
+          <label>{rating}/5</label>
           <br />
           <input type="submit" value="Add" />
         </form>

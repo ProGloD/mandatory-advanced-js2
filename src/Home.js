@@ -41,11 +41,13 @@ class Home extends Component {
           <tbody>
             {this.state.movies.map(movie => (
               <tr key={movie.id}>
-                <td>{movie.title}</td>
+                <td>
+                  <Link to={`/about/${movie.id}`}>{movie.title}</Link>
+                </td>
                 <td>{movie.director}</td>
                 <td>{movie.rating}</td>
                 <td>
-                  <Link to={`/about/${movie.id}`}>About</Link>
+                  <span>Edit</span>
                   <span>Remove</span>
                 </td>
               </tr>
