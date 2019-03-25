@@ -8,29 +8,43 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      movies: null
+      movies: null,
+      filtered: null
     };
 
     this.getMovies = this.getMovies.bind(this);
+    this.Search = this.Search.bind(this);
 
     this.getMovies();
   }
 
-  getMovies(){
+  getMovies() {
     axios
       .get(
         "http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies"
       )
       .then(response =>
         this.setState({
-          movies: response.data
+          movies: response.data,
+          filtered: response.data
         })
       );
   }
 
+  Search(e) {
+    const filtered = this.state.movies.filter(
+      movie =>
+        movie.title.toLowerCase().includes(e.target.value) ||
+        movie.director.toLowerCase().includes(e.target.value)
+    );
+
+   this.setState({filtered: filtered});
+    
+  }
+
   render() {
-    const { movies } = this.state;
-    if (!movies) {
+    const { filtered } = this.state;
+    if (!filtered) {
       return <p>Loading, please wait...</p>;
     }
 
@@ -39,6 +53,8 @@ class Home extends Component {
         <Helmet>
           <title>Home</title>
         </Helmet>
+
+        <input onChange={this.Search} value={this.state.search} />
 
         <table>
           <thead>
@@ -50,7 +66,7 @@ class Home extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map(movie => (
+            {this.state.filtered.map(movie => (
               <tr key={movie.id}>
                 <td>
                   <Link to={`/about/${movie.id}`}>{movie.title}</Link>
