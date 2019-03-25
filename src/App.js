@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./Home";
 import About from "./About";
 import AddMovie from "./AddMovie";
+import Edit from "./Edit";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/about/:id" component={About} />
           <Route path="/add_movie" component={AddMovie} />
+          <Route path="/edit/:id" component={Edit} />
         </div>
       </Router>
     );

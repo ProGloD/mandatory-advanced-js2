@@ -8,9 +8,15 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      movies: []
+      movies: null
     };
 
+    this.getMovies = this.getMovies.bind(this);
+
+    this.getMovies();
+  }
+
+  getMovies(){
     axios
       .get(
         "http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies"
@@ -23,6 +29,11 @@ class Home extends Component {
   }
 
   render() {
+    const { movies } = this.state;
+    if (!movies) {
+      return <p>Loading, please wait...</p>;
+    }
+
     return (
       <>
         <Helmet>
@@ -47,8 +58,22 @@ class Home extends Component {
                 <td>{movie.director}</td>
                 <td>{movie.rating}</td>
                 <td>
-                  <span>Edit</span>
-                  <span>Remove</span>
+                  <Link to={`edit/${movie.id}`}>
+                    <button>Edit</button>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      axios
+                        .delete(
+                          `http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${
+                            movie.id
+                          }`
+                        )
+                        .then(() => this.getMovies());
+                    }}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

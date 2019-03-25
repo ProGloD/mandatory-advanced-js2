@@ -3,22 +3,42 @@ import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 
-class AddMovie extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      added: false,
-      movie: {
-        title: "Yaro's test",
-        director: "Yaro",
-        description: "This is test made by Yaro!",
-        rating: 5
-      }
+      updated: false,
+      movie: null
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.source = axios.CancelToken.source();
+    axios
+      .get(
+        `http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${
+          this.props.match.params.id
+        }`,
+        {
+          cancelToken: this.source.token
+        }
+      )
+      .then(response => this.setState({ movie: response.data }))
+      .catch(thrown => {
+        if (axios.isCancel(thrown)) {
+          console.log("Request canceled", thrown.message);
+        } else {
+          // handle error
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this.source.cancel("Operation canceled by the user.");
   }
 
   onChange(e) {
@@ -31,28 +51,37 @@ class AddMovie extends Component {
     e.preventDefault();
 
     axios
-      .post(
-        "http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies",
+      .put(
+        `http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${
+          this.props.match.params.id
+        }`,
         this.state.movie
       )
-      .then(() => {
-        this.setState({
-          added: true
-        });
-      });
+      .then(() => this.setState({ updated: true }));
   }
 
   render() {
-    if (this.state.added) {
-      return <Redirect to="/" />;
+    if (this.state.updated) {
+      return <Redirect to={`/about/${this.props.match.params.id}`} />;
     }
 
-    const { title, director, description, rating } = this.state.movie;
+    const { movie } = this.state;
+    if (!movie) {
+      return (
+        <>
+          <Helmet>
+            <title>Loading...</title>
+          </Helmet>
+
+          <p>Loading, please wait...</p>
+        </>
+      );
+    }
 
     return (
       <>
         <Helmet>
-          <title>New Movie</title>
+          <title>Editing {`${this.state.movie.title}`}</title>
         </Helmet>
 
         <form onSubmit={this.onSubmit}>
@@ -63,7 +92,7 @@ class AddMovie extends Component {
             minLength="1"
             maxLength="40"
             onChange={this.onChange}
-            value={title}
+            value={this.state.movie.title}
             required="required"
           />
           <h3>Director:</h3>
@@ -73,7 +102,7 @@ class AddMovie extends Component {
             minLength="1"
             maxLength="40"
             onChange={this.onChange}
-            value={director}
+            value={this.state.movie.director}
             required="required"
           />
           <h3>Description:</h3>
@@ -82,7 +111,7 @@ class AddMovie extends Component {
             minLength="1"
             maxLength="300"
             onChange={this.onChange}
-            value={description}
+            value={this.state.movie.description}
             required="required"
           />
           <h3>Rating:</h3>
@@ -93,16 +122,16 @@ class AddMovie extends Component {
             max="5"
             step="0.1"
             onChange={this.onChange}
-            value={rating}
+            value={this.state.movie.rating}
             required="required"
           />
-          <label>{rating}/5</label>
+          <label>{this.state.movie.rating}/5</label>
           <br />
-          <input type="submit" value="Add" />
+          <input type="submit" value="Save" />
         </form>
       </>
     );
   }
 }
 
-export default AddMovie;
+export default Edit;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 
@@ -52,6 +53,9 @@ class About extends Component {
             {this.state.movie.rating}/5
           </p>
           <p>{this.state.movie.description}</p>
+          <Link to={`/edit/${this.props.match.params.id}`}>
+            <button>Edit</button>
+          </Link>
         </div>
       </>
     );
