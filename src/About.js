@@ -8,7 +8,7 @@ class About extends Component {
     super(props);
 
     this.state = {
-      movie: {}
+      movie: null
     };
   }
 
@@ -39,6 +39,18 @@ class About extends Component {
   }
 
   render() {
+    if (!this.state.movie) {
+      return (
+        <>
+          <Helmet>
+            <title>Loading...</title>
+          </Helmet>
+
+          <p>Loading, please wait...</p>
+        </>
+      );
+    }
+
     return (
       <>
         <Helmet>

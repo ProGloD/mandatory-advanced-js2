@@ -38,22 +38,25 @@ class Home extends Component {
         movie.director.toLowerCase().includes(e.target.value)
     );
 
-   this.setState({filtered: filtered});
-    
+    this.setState({ filtered: filtered });
   }
 
   render() {
     const { filtered } = this.state;
     if (!filtered) {
-      return <p>Loading, please wait...</p>;
+      return (
+        <>
+          <Helmet>
+            <title>Home</title>
+          </Helmet>
+          <p>Loading, please wait...</p>
+        </>
+      );
     }
 
     return (
       <>
-        <Helmet>
-          <title>Home</title>
-        </Helmet>
-
+        <label>Search: </label>
         <input onChange={this.Search} value={this.state.search} />
 
         <table>
