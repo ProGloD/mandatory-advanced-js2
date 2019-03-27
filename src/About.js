@@ -57,7 +57,7 @@ class About extends Component {
           <title>{this.state.movie.title}</title>
         </Helmet>
 
-        <div>
+        <div className="about">
           <h2>{this.state.movie.title}</h2>
           <h3>Directed by: {this.state.movie.director}</h3>
           <p>

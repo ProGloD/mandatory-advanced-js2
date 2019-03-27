@@ -56,48 +56,62 @@ class Home extends Component {
 
     return (
       <>
-        <label>Search: </label>
-        <input onChange={this.Search} value={this.state.search} />
+        <aside className="searchContainer">
+          <label>
+            <i className="material-icons searchIcon">search</i>
+          </label>
+          <input
+            className="searchBox"
+            type="search"
+            onChange={this.Search}
+            placeholder="Search..."
+            value={this.state.search}
+          />
+        </aside>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Director</th>
-              <th>Rating</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.filtered.map(movie => (
-              <tr key={movie.id}>
-                <td>
-                  <Link to={`/about/${movie.id}`}>{movie.title}</Link>
-                </td>
-                <td>{movie.director}</td>
-                <td>{movie.rating}</td>
-                <td>
-                  <Link to={`edit/${movie.id}`}>
-                    <button>Edit</button>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      axios
-                        .delete(
-                          `http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${
-                            movie.id
-                          }`
-                        )
-                        .then(() => this.getMovies());
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="moviesList">
+          <table>
+            <thead>
+              <tr className="tableHead">
+                <th>Title</th>
+                <th>Director</th>
+                <th>Rating</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.filtered.map(movie => (
+                <tr key={movie.id}>
+                  <td>
+                    <Link to={`/about/${movie.id}`}>{movie.title}</Link>
+                  </td>
+                  <td>{movie.director}</td>
+                  <td>{movie.rating}</td>
+                  <td>
+                    <Link to={`edit/${movie.id}`}>
+                      <button className="action edit">
+                        <i className="material-icons">edit</i>
+                      </button>
+                    </Link>
+                    <button className="action delete"
+                      onClick={() => {
+                        axios
+                          .delete(
+                            `http://ec2-13-53-132-57.eu-north-1.compute.amazonaws.com:3000/movies/${
+                              movie.id
+                            }`
+                          )
+                          .then(() => this.getMovies());
+                      }}
+                    >
+                      <i className="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </>
     );
   }

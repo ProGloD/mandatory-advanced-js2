@@ -1,33 +1,206 @@
-.App {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("bg_main.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+/* Navigation Box */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: black;
+}
+
+.menuItem {
+  float: left;
+}
+
+.menuItem a {
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: all 0.5s;
+  color: #fff;
+  font-size: 1.5rem;
+  animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+.menuItem a:hover {
+  animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228dff,
+      0 0 70px #228dff, 0 0 80px #228dff, 0 0 100px #228dff, 0 0 150px #228dff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228dff,
+      0 0 35px #228dff, 0 0 40px #228dff, 0 0 50px #228dff, 0 0 75px #228dff;
+  }
+}
+
+/* Search Box */
+.searchContainer {
+  display: inline-flex;
+  flex: 1 1 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+}
+
+.searchIcon {
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.searchBox {
+  border: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  flex: 1;
+}
+
+/* Movies List */
+.moviesList {
+  text-align: center;
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  width: calc(100% / 3);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: lightgrey;
+}
+
+.tableHead th {
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+tbody tr {
+  border-bottom: 1px solid #000;
+}
+
+td a {
+  text-decoration: none;
+  color: #000;
+}
+
+td a:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
+.action {
+  border: none;
+  padding: 1.5px 3px;
+  border-radius: 24px;
+  cursor: pointer;
+}
+.action:first-child {
+  margin-right: 8px;
+}
+
+.edit {
+  background-color: green;
+}
+
+.edit:hover {
+  background-color: lightgreen;
+}
+
+.delete {
+  background-color: red;
+}
+
+.delete:hover {
+  background-color: rgb(255, 124, 124);
+}
+
+/* Form */
+
+form {
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  background-color: lightgray;
+  width: calc(100% / 3);
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+input[type="text"] {
+  width: 90%;
+  border: none;
+  border-radius: 24px;
+  padding: 0.5rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+textarea {
+  width: 90%;
+  height: 100px;
+  resize: none;
+  padding: 0.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+.rating{
+  display: inline-flex;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.rating label{
+  width: 50px;
+  margin-left: 0.5rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background-color: yellow;
+  width: 200px;
+  height: 20px;
+  border-radius: 24px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: goldenrod;
+  opacity: 0.5;
+  width: 10px;
+  height: 26px;
+}
+
+input[type="submit"] {
+  float: right;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+/* About */
+.about{
+  width: calc(100% / 3);
+  background-color: lightgray;
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  text-align: center;
+}
+
+.about button{
+  float: right;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
 }

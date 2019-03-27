@@ -11,13 +11,13 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="App">
           <nav>
-            <ul>
-              <li>
+            <ul className="menu">
+              <li className="menuItem">
                 <Link to="/">Home</Link>
               </li>
-              <li>
+              <li className="menuItem">
                 <Link to="/add_movie">Add movie</Link>
               </li>
             </ul>

@@ -10,10 +10,10 @@ class AddMovie extends Component {
     this.state = {
       added: false,
       movie: {
-        title: "Yaro's test",
-        director: "Yaro",
-        description: "This is test made by Yaro!",
-        rating: 5
+        title: "",
+        director: "",
+        description: "",
+        rating: 0
       }
     };
 
@@ -62,6 +62,7 @@ class AddMovie extends Component {
             type="text"
             minLength="1"
             maxLength="40"
+            placeholder="Title..."
             onChange={this.onChange}
             value={title}
             required="required"
@@ -72,6 +73,7 @@ class AddMovie extends Component {
             type="text"
             minLength="1"
             maxLength="40"
+            placeholder="Director..."
             onChange={this.onChange}
             value={director}
             required="required"
@@ -81,22 +83,25 @@ class AddMovie extends Component {
             id="description"
             minLength="1"
             maxLength="300"
+            placeholder="Description..."
             onChange={this.onChange}
             value={description}
             required="required"
           />
           <h3>Rating:</h3>
-          <input
-            id="rating"
-            type="range"
-            min="0"
-            max="5"
-            step="0.1"
-            onChange={this.onChange}
-            value={rating}
-            required="required"
-          />
-          <label>{rating}/5</label>
+          <div className="rating">
+            <input
+              id="rating"
+              type="range"
+              min="0"
+              max="5"
+              step="0.1"
+              onChange={this.onChange}
+              value={rating}
+              required="required"
+            />
+            <label>{rating}/5</label>
+          </div>
           <br />
           <input type="submit" value="Add" />
         </form>
